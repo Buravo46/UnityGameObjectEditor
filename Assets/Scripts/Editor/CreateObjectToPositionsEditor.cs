@@ -129,7 +129,7 @@ public class CreateObjectToPositionsEditor : EditorWindow
     * @brief 座標の初期化処理
     * @param bool 初期化するかどうかの判定
     */
-    private void InitializePosition (bool t_init) 
+    private void InitializePosition (bool t_init)
     {
         if (t_init)
         {
@@ -144,6 +144,7 @@ public class CreateObjectToPositionsEditor : EditorWindow
     /*===============================================================*/
     /**
     * @brief オブジェクトの生成処理
+    * @param bool 生成するかどうかの判定
     */
     private void Create (bool t_create) 
     {
