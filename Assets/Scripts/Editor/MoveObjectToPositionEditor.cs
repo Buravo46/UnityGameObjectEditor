@@ -7,7 +7,7 @@ using System.Collections.Generic;
 * 設定した親オブジェクトの子供オブジェクトを全て取得し,取得した子供オブジェクトの座標を調整するエディタ
 * 2014年12月25日 Buravo
 */ 
-public class PutObjectToPositionsEditor : EditorWindow 
+public class MoveObjectToPositionEditor : EditorWindow 
 {
 
     #region メンバ変数
@@ -25,24 +25,24 @@ public class PutObjectToPositionsEditor : EditorWindow
     */
     private Vector2 m_scroll_position;
     /*===============================================================*/
-    #endregion 
+    #endregion
  
     /*===============================================================*/
     /**
     * @brief 初期化処理
     */
     // メニューから呼び出せるエディタの項目を追加.
-    [MenuItem("CustomMenu/Put/Put Objects To Positions")]
+    [MenuItem("CustomMenu/GameObject/Move Object To Position")]
     static void Init () 
     {
         // 専用のウィンドウを表示.
-        EditorWindow.GetWindow<PutObjectToPositionsEditor>(true, "Put Objects To Positions");
+        EditorWindow.GetWindow<MoveObjectToPositionEditor>(true, "Move Object To Position");
     }
     /*===============================================================*/
 
     /*===============================================================*/
     /**
-    * @brief ウィンドウ表示時に自動で呼ばれるメソッド。
+    * @brief ウィンドウ表示時に自動で呼ばれるメソッド
     */ 
     void OnEnable () 
     {
@@ -66,7 +66,7 @@ public class PutObjectToPositionsEditor : EditorWindow
 
     /*===============================================================*/
     /**
-    * @brief 選択内容の変更時に自動で呼ばれるメソッド。
+    * @brief 選択内容の変更時に自動で呼ばれるメソッド
     */
     void OnSelectionChange () 
     {
@@ -90,7 +90,7 @@ public class PutObjectToPositionsEditor : EditorWindow
 
     /*===============================================================*/
     /**
-    * @brief エディタからインスペクターの値を変更した際に呼ばれるメソッド。
+    * @brief 座標の表示メソッド
     */
     void PositionListView ()
     {
@@ -101,7 +101,7 @@ public class PutObjectToPositionsEditor : EditorWindow
         // 全ての子供オブジェクトの座標の入力フィールド表示.
         for (int i = 0; i < m_child_list.Count; i++)
         {
-            m_child_list[i].transform.position = EditorGUILayout.Vector3Field("Chiled : "+m_child_list[i].name, m_child_list[i].transform.position);
+            m_child_list[i].transform.localPosition = EditorGUILayout.Vector3Field("Chiled : "+m_child_list[i].name, m_child_list[i].transform.localPosition);
         }
         // スクロールビューの表示を終了.
         EditorGUILayout.EndScrollView();
@@ -122,7 +122,7 @@ public class PutObjectToPositionsEditor : EditorWindow
             // 全ての子供オブジェクトの座標を初期化.
             for (int i = 0; i < m_child_list.Count; i++)
             {
-                m_child_list[i].transform.position = Vector3.zero;
+                m_child_list[i].transform.localPosition = Vector3.zero;
             }
         }
     }
@@ -154,22 +154,36 @@ public class PutObjectToPositionsEditor : EditorWindow
                     foreach (GameObject child in m_child_list)
                     {
                         // １つのプロパティを修正.
-                        Undo.RecordObject(child.transform, "Put Objects To Positions");
+                        Undo.RecordObject(child.transform, "Move Object To Position");
                     }
                 }
             }
+            // スペースで間隔をとる.
+            EditorGUILayout.Space();
+            // 水平に配置するGUIグループの作成を開始.
+            EditorGUILayout.BeginHorizontal();
+            // レイアウトグループ内に全体の幅に対して均一となるスペースを生成し挿入する.
+            GUILayout.FlexibleSpace();
+            // 垂直に配置するGUIグループの作成を開始.
+            EditorGUILayout.BeginVertical();
 
-            GUILayout.Label("", EditorStyles.boldLabel);
             // 座標の初期化.
-            if (GUILayout.Button("Initialize Positions"))
+            if (GUILayout.Button("Initialize Positions", GUILayout.Width(150), GUILayout.Height(50)))
             {
                 // ポップアップウィンドウの作成.
-                PopupWindow pop = EditorWindow.GetWindow<PopupWindow>(true, "Yes or No");
+                PopupWindow pop = EditorWindow.GetWindow<PopupWindow>(true, "Do you want to initialize the Positions ?");
                 // 初期化処理の代入.
                 pop.callBack = InitializePosition;
                 // テキストの代入.
                 pop.Text = "Do you want to initialize the Positions ?";
             }
+
+            // 垂直に配置するGUIグループの作成を終了.
+            EditorGUILayout.EndVertical();
+            // レイアウトグループ内に全体の幅に対して均一となるスペースを生成し挿入する.
+            GUILayout.FlexibleSpace();
+            // 水平に配置するGUIグループの作成を終了.
+            EditorGUILayout.EndHorizontal();
         } 
         catch (System.FormatException) 
         {

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 * 設定したPrefabを,設定した複数の座標に生成するエディタ
 * 2014年12月25日 Buravo
 */ 
-public class CreateObjectToPositionsEditor : EditorWindow 
+public class CreateObjectToPositionEditor : EditorWindow 
 {
 
     #region メンバ変数
@@ -39,20 +39,18 @@ public class CreateObjectToPositionsEditor : EditorWindow
     /**
     * @brief 初期化処理
     */
-    // Preference内にメニューの追加.
-    [PreferenceItem("CustomMenu")]
     // メニューから呼び出せるエディタの項目を追加.
-    [MenuItem("CustomMenu/Create/Create Objects To Positions")]
+    [MenuItem("CustomMenu/GameObject/Create Object To Position")]
     static void Init () 
     {
         // 専用のウィンドウを表示.
-        EditorWindow.GetWindow<CreateObjectToPositionsEditor>(true, "Create Objects To Positions");
+        EditorWindow.GetWindow<CreateObjectToPositionEditor>(true, "Create Object To Position");
     }
     /*===============================================================*/
 
     /*===============================================================*/
     /**
-    * @brief ウィンドウ表示時に自動で呼ばれるメソッド。
+    * @brief ウィンドウ表示時に自動で呼ばれるメソッド
     */ 
     void OnEnable () 
     {
@@ -69,7 +67,7 @@ public class CreateObjectToPositionsEditor : EditorWindow
 
     /*===============================================================*/
     /**
-    * @brief 選択内容の変更時に自動で呼ばれるメソッド。
+    * @brief 選択内容の変更時に自動で呼ばれるメソッド
     */
     void OnSelectionChange () 
     {
@@ -83,7 +81,7 @@ public class CreateObjectToPositionsEditor : EditorWindow
 
     /*===============================================================*/
     /**
-    * @brief 増減した座標の個数をチェックし,リストを増減するメソッド。
+    * @brief 増減した座標の個数をチェックし,リストを増減するメソッド
     */
     void CheckPositionList ()
     {
@@ -108,7 +106,7 @@ public class CreateObjectToPositionsEditor : EditorWindow
 
     /*===============================================================*/
     /**
-    * @brief 座標の表示メソッド。
+    * @brief 座標の表示メソッド
     */
     void PositionListView ()
     {
@@ -129,7 +127,7 @@ public class CreateObjectToPositionsEditor : EditorWindow
     * @brief 座標の初期化処理
     * @param bool 初期化するかどうかの判定
     */
-    private void InitializePosition (bool t_init)
+    private void InitializePosition (bool t_init) 
     {
         if (t_init)
         {
@@ -166,7 +164,7 @@ public class CreateObjectToPositionsEditor : EditorWindow
                     obj.transform.parent = m_parent.transform;
                 }
                 // 新しくオブジェクトを生成する時のUndo操作を登録.
-                Undo.RegisterCreatedObjectUndo(obj, "Create Objects To Positions");
+                Undo.RegisterCreatedObjectUndo(obj, "Create Object To Position");
             }
         }
     }
@@ -206,28 +204,43 @@ public class CreateObjectToPositionsEditor : EditorWindow
                     PositionListView(); 
                 }
             }
-
-            GUILayout.Label("", EditorStyles.boldLabel);
+            // 水平に配置するGUIグループの作成を開始.
+            EditorGUILayout.BeginHorizontal();
+            // レイアウトグループ内に全体の幅に対して均一となるスペースを生成し挿入する.
+            GUILayout.FlexibleSpace();
+            // 垂直に配置するGUIグループの作成を開始.
+            EditorGUILayout.BeginVertical();
+            
+            // スペースで間隔をとる.
+            EditorGUILayout.Space();
             // 座標の初期化.
-            if (GUILayout.Button("Initialize Positions"))
+            if (GUILayout.Button("Initialize Positions", GUILayout.Width(150), GUILayout.Height(50)))
             {
                 // ポップアップウィンドウの作成.
-                PopupWindow pop = EditorWindow.GetWindow<PopupWindow>(true, "Yes or No");
+                PopupWindow pop = EditorWindow.GetWindow<PopupWindow>(true, "Do you want to initialize the Positions ?");
                 // 初期化処理の代入.
                 pop.callBack = InitializePosition;
                 // テキストの代入.
                 pop.Text = "Do you want to initialize the Positions ?";
             }
+            // スペースで間隔をとる.
+            EditorGUILayout.Space();
             // オブジェクトの生成.
-            if (GUILayout.Button("Create"))
+            if (GUILayout.Button("Create", GUILayout.Width(150), GUILayout.Height(50)))
             {
                 // ポップアップウィンドウの作成.
-                PopupWindow pop = EditorWindow.GetWindow<PopupWindow>(true, "Yes or No");
-                // 初期化処理の代入.
+                PopupWindow pop = EditorWindow.GetWindow<PopupWindow>(true, "Do you want to create an object ?");
+                // 生成処理の代入.
                 pop.callBack = Create;
                 // テキストの代入.
                 pop.Text = "Do you want to create an object ?";
             }
+            // 垂直に配置するGUIグループの作成を終了.
+            EditorGUILayout.EndVertical();
+            // レイアウトグループ内に全体の幅に対して均一となるスペースを生成し挿入する.
+            GUILayout.FlexibleSpace();
+            // 水平に配置するGUIグループの作成を終了.
+            EditorGUILayout.EndHorizontal();
         } 
         catch (System.FormatException) 
         {
