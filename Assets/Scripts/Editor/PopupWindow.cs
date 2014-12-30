@@ -13,7 +13,7 @@ public class PopupWindow : EditorWindow
     /**
     * @brief YES用の処理を使うためのデリゲート宣言
     */
-    public delegate void Callback(bool t_init);
+    public delegate void Callback(bool t_check);
     /**
     * @brief YES用の処理を使うためのデリゲート変数
     */
