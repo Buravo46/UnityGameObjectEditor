@@ -1,9 +1,9 @@
-##【Unity】UnityGameObjectEditor
+## 【Unity】UnityGameObjectEditor
 
-####概要
+### 概要
 これはUnityのエディタウィンドウを拡張して作成したオブジェクトの制御をするエディタです。このプロジェクトに含まれているエディタは6種類あります。
 
-#####CreateObjectToPositionEditor
+##### CreateObjectToPositionEditor
 このエディタはオブジェクトを複数の座標に一気に生成することができます。親オブジェクトを指定してオブジェクトをまとめることも可能です。
 
 このエディタはメニューの(CustomMenu/GameObject/Create Object To Position)で呼び出し、項目を設定することでオブジェクトの生成ができます。
@@ -21,7 +21,7 @@
 
 上記項目を設定してCreateボタンを押すことでHierarchyViewにオブジェクトが生成されます。
 
-#####MoveObjectToPositionEditor
+##### MoveObjectToPositionEditor
 このエディタは親オブジェクトと子供オブジェクトの座標を調整することができます。
 
 このエディタはメニューの(CustomMenu/GameObject/Move Object To Position)で呼び出し、項目を設定することでオブジェクトの座標の調整ができます。
@@ -36,7 +36,7 @@
 
 上記項目のPositionsの値を調整することで調整したいオブジェクトの座標が変動します。
 
-#####RotateObjectToRotationEditor
+##### RotateObjectToRotationEditor
 このエディタは親オブジェクトと子供オブジェクトの角度をオイラー角で調整することができます。
 
 このエディタはメニューの(CustomMenu/GameObject/Rotate Object To Rotation)で呼び出し、項目を設定することでオブジェクトの座標の調整ができます。
@@ -51,7 +51,7 @@
 
 上記項目のRotationsの値を調整することで調整したいオブジェクトの角度がオイラー角として変動します。
 
-#####ScaleObjectToSizeEditor
+##### ScaleObjectToSizeEditor
 このエディタは親オブジェクトと子供オブジェクトのスケールを調整することができます。
 
 このエディタはメニューの(CustomMenu/GameObject/Scale Object To Size)で呼び出し、項目を設定することでオブジェクトの座標の調整ができます。
@@ -66,7 +66,7 @@
 
 上記項目のSizesの値を調整することで調整したいオブジェクトのスケールが変動します。
 
-#####DeleteObjectToSelectEditor
+##### DeleteObjectToSelectEditor
 このエディタはHierarchy上のオブジェクトを選択して一気に削除することができます。
 
 このエディタはメニューの(CustomMenu/GameObject/Delete Object To Select)で呼び出し、項目を設定することでオブジェクトの座標の調整ができます。
@@ -80,11 +80,11 @@
 
 Delete ObjectにチェックしてDeleteボタンを押すことで一気にオブジェクトを削除することができます。
 
-#####PopupWindow
+##### PopupWindow
 このエディタは簡易的に用意したポップアップウィンドウです。
 
-####利用方法
+#### 利用方法
 Assets/Scripts/Editor内にスクリプトを置くことで利用できます。
 
-####License
+#### License
 Mit license
